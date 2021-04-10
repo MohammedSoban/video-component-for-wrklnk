@@ -6,8 +6,8 @@ import Appli from './viewPort/index';
 function App() {
   return (
     <div className="App">
-    {/* <Player/> */}
-  <Appli/>
+    <Player/>
+  {/* <Appli/> */}
     </div>
   );
 }
