@@ -1,44 +1,60 @@
-import React from "react";
+import handleViewport from 'react-in-viewport';
+import ReactPlayer from "react-player";
 
-import handleViewport from "react-in-viewport";
+const videos = [
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/todo-app-3df9d.appspot.com/o/Stories_Instagram_4.mp4?alt=media&token=5ff9c4dc-feb1-4dd2-9b14-10084bf02d47",
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/todo-app-3df9d.appspot.com/o/Stories_Instagram_3.mp4?alt=media&token=10b94b5d-5aad-4b24-b07d-99a5eeb5ea9e",
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/todo-app-3df9d.appspot.com/o/Stories_Instagram_3.mp4?alt=media&token=10b94b5d-5aad-4b24-b07d-99a5eeb5ea9e",
+  },
 
- import "./styles.css";
+];
+const Block = (props) => {
 
-const Item = ({ inViewport, enterCount, leaveCount, innerRef }) => {
-  const getStyle = () => {
-    // Fade in only the first time we enter the viewport.
-    if (inViewport && enterCount === 1) {
-      return { WebkitTransition: "opacity 0.75s ease-in-out" };
-    } else if (!inViewport && enterCount < 1) {
-      return { WebkitTransition: "none", opacity: "0" };
-    } else {
-      return {};
-    }
-  };
-
+  console.log(props)
+  const { inViewport, forwardedRef, index } = props;
+  const color = inViewport ? '#217ac0' : '#ff9800';
+  const text = inViewport ? 'In viewport' : 'Not in viewport';
+  console.log(inViewport)
   return (
-    <div className="content" style={getStyle()} ref={innerRef}>
-      <h3>Hello Viewport!</h3>
-      <p>{`Enter viewport: ${enterCount} times`}</p>
-      <p>{`Leave viewport: ${leaveCount} times`}</p>
+    <div className="viewport-block" ref={forwardedRef}>
+
+
+      <div className="player-wrapper">
+        <ReactPlayer
+          url={ videos[index].url}
+          loop="true"
+          controls="false"
+          // muted='false'
+
+          // width='100%'
+          // height='100%'
+          muted={true}
+          playing={true}
+          playsinline='true'
+
+        />
+      </div>
+
     </div>
   );
 };
 
-const ViewportItem = handleViewport(Item /** options: {}, config: {} **/);
+const ViewportBlock = handleViewport(Block, /** options: {}, config: {} **/);
 
-function Appli() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
 
-      <ViewportItem
-        onEnterViewport={() => console.log("[debug]: enter in viewport.")}
-        onLeaveViewport={() => console.log("[debug]: leave viewport.")}
-      />
+const Component = (props) => (
+
+  <div>
+    <div>
+      <h2>Scroll down to make component in viewport</h2>
     </div>
-  );
-}
+    {videos.map((video, index) => <ViewportBlock onEnterViewport={() => console.log('enter', index)} onLeaveViewport={() => console.log('leave', index)} index={index} />)}
+  </div>
+)
 
-export default Appli
+export default Component

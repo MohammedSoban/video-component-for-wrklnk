@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import Player from './Video-player/index';
-import Appli from './viewPort/index';
+import MySection from './viewPort/index';
+import Component from './new/index';
 
 function App() {
   return (
     <div className="App">
-    <Player/>
-  {/* <Appli/> */}
+    {/* <Player/> */}
+  <MySection/>
+  {/* <Component/> */}
     </div>
   );
 }
